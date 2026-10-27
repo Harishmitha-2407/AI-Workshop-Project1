@@ -1,344 +1,506 @@
-# 🧠 Deep Learning Projects: ANN & CNN
+ <div align="center">
 
+# 🌙 Artificial Neural Network for Binary Classification
+### Learning Non-Linear Patterns with the `make_moons` Dataset
 
-## 🚀 About This Repository
+![Python](https://img.shields.io/badge/Python-3.x-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-Keras-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white)
+![Scikit-learn](https://img.shields.io/badge/scikit--learn-ML-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white)
+![Status](https://img.shields.io/badge/Status-Notebook%20Project-2EA44F?style=for-the-badge)
 
-This repository contains two deep learning projects developed using Python, TensorFlow, and Keras. These projects demonstrate how neural networks can learn patterns from numerical data and images.
+**A complete deep-learning project demonstrating how an Artificial Neural Network learns complex, non-linear patterns to classify two moon-shaped classes.**
 
-- **Project 1: ANN Using the make_moons Dataset** — A binary classification project that explores how an Artificial Neural Network learns nonlinear decision boundaries.
-- **Project 2: CNN for Dogs vs Cats Classification** — An image classification project that uses a Convolutional Neural Network to distinguish between cats and dogs.
-
-## 📑 Table of Contents
-
-1. [ANN Using the make_moons Dataset](#1-ann-using-the-make_moons-dataset)
-2. [CNN for Dogs vs Cats Classification](#2-cnn-for-dogs-vs-cats-classification)
-3. [Installation and Setup](#3-installation-and-setup)
-4. [How to Run the Projects](#4-how-to-run-the-projects)
-5. [Technologies Used](#5-technologies-used)
-6. [Expected Outputs](#6-expected-outputs)
-7. [Repository Structure](#7-repository-structure)
-8. [Learning Outcomes](#8-learning-outcomes)
+</div>
 
 ---
 
-# 1. 🔵 ANN Using the make_moons Dataset
+## 📌 Table of Contents
 
-## 📖 Overview
+1. [Project Overview](#-project-overview)
+2. [Objectives](#-objectives)
+3. [How It Works](#-how-it-works)
+4. [Dataset Description](#-dataset-description)
+5. [Model Architecture](#-model-architecture)
+6. [Technology Stack](#️-technology-stack)
+7. [Installation and Setup](#-installation-and-setup)
+8. [Project Workflow](#-project-workflow)
+9. [Model Evaluation](#-model-evaluation)
+10. [Visualizations](#-visualizations)
+11. [Making Predictions](#-making-predictions)
+12. [Saving the Model](#-saving-the-model)
+13. [Project Structure](#-project-structure)
+14. [Future Improvements](#-future-improvements)
+15. [Limitations](#️-limitations)
+16. [Contributing](#-contributing)
+17. [License](#-license)
 
-The Artificial Neural Network (ANN) project demonstrates binary classification using the synthetic `make_moons` dataset from Scikit-learn.
+---
 
-The dataset contains two interleaving crescent-shaped classes, making it useful for understanding how neural networks learn complex, nonlinear patterns.
+## ✨ Project Overview
 
-### 🎯 Objectives
+This project demonstrates the implementation of an **Artificial Neural Network (ANN)** for binary classification using the `make_moons` dataset provided by Scikit-learn.
 
-- Understand the fundamentals of artificial neural networks.
-- Generate and visualize a synthetic dataset.
-- Preprocess data using feature standardization.
-- Train a neural network using TensorFlow/Keras.
-- Evaluate classification performance using multiple metrics.
-- Visualize the decision boundary learned by the model.
+The dataset contains two interleaving crescent-shaped classes. Since these classes cannot be effectively separated by a single straight line, the model must learn a non-linear decision boundary.
 
-### 📊 Dataset Details
+A feed-forward neural network is developed using TensorFlow and Keras to learn these patterns and classify the input samples into two classes.
 
-| Property | Value |
+The project covers the complete machine-learning workflow, including data generation, visualization, preprocessing, model development, training, evaluation, prediction, and model saving.
+
+### 🎯 Project Goal
+
+To understand how an ANN learns non-linear relationships from two-dimensional data and how its classification performance can be evaluated using standard machine-learning metrics.
+
+## 🎯 Objectives
+
+- Generate a synthetic dataset for binary classification.
+- Understand the structure of the `make_moons` dataset.
+- Visualize the distribution of the two classes.
+- Split the dataset into training and testing sets.
+- Standardize input features using `StandardScaler`.
+- Design a multi-layer Artificial Neural Network.
+- Train the model using TensorFlow/Keras.
+- Apply early stopping to help reduce unnecessary training.
+- Evaluate model performance using accuracy and loss.
+- Generate a classification report and confusion matrix.
+- Visualize training and validation performance.
+- Plot the model's learned decision boundary.
+- Predict the class of new input samples.
+- Save the trained neural network for future use.
+
+## 🧠 How It Works
+
+The project follows these major steps:
+
+1. **Data Generation:** Generate two moon-shaped classes using Scikit-learn.
+2. **Data Visualization:** Display the samples to understand their distribution.
+3. **Data Splitting:** Divide the dataset into training and testing sets.
+4. **Feature Scaling:** Standardize the input features.
+5. **Model Construction:** Create a neural network with multiple dense layers.
+6. **Model Training:** Train the network using the Adam optimizer.
+7. **Validation:** Monitor validation loss during training.
+8. **Evaluation:** Calculate test accuracy and loss and inspect classification metrics.
+9. **Visualization:** Display learning curves, the confusion matrix, and the decision boundary.
+10. **Prediction:** Use the trained model to classify new samples.
+11. **Model Saving:** Save the trained neural network for later use.
+
+## 📊 Dataset Description
+
+The project uses Scikit-learn's `make_moons` function to generate a synthetic dataset.
+
+```python
+from sklearn.datasets import make_moons
+
+X, y = make_moons(
+    n_samples=1000,
+    noise=0.20,
+    random_state=42
+)
+```
+
+### Dataset Details
+
+| Property | Description |
 |---|---|
-| Dataset | `make_moons` |
+| Dataset | Make Moons |
+| Source | Scikit-learn |
 | Number of samples | 1,000 |
 | Input features | 2 |
 | Number of classes | 2 |
-| Noise | 0.20 |
+| Class labels | 0 and 1 |
+| Noise level | 0.20 |
 | Random state | 42 |
-| Test split | 20% |
+| Test set size | 20% |
 
-The dataset is generated automatically, so no external dataset download is required.
+### Why Use the Make Moons Dataset?
 
-### 🏗️ ANN Architecture
+The `make_moons` dataset is useful for understanding non-linear classification because the two classes form interleaving crescent shapes.
 
-| Layer | Configuration |
+A simple linear classifier may struggle to separate the classes accurately. A neural network with non-linear activation functions can learn more flexible decision boundaries.
+
+The dataset is synthetic, so an external dataset download is not required.
+
+## 🏗️ Model Architecture
+
+The project uses a feed-forward Artificial Neural Network built with TensorFlow and Keras.
+
+### Network Structure
+
+```python
+model = Sequential([
+    Input(shape=(2,)),
+    Dense(16, activation="relu"),
+    Dense(16, activation="relu"),
+    Dense(8, activation="relu"),
+    Dense(1, activation="sigmoid")
+])
+```
+
+### Layer Explanation
+
+| Layer | Configuration | Purpose |
+|---|---|---|
+| Input Layer | 2 features | Accepts the two input coordinates |
+| Hidden Layer 1 | 16 neurons, ReLU | Learns initial feature patterns |
+| Hidden Layer 2 | 16 neurons, ReLU | Learns more complex relationships |
+| Hidden Layer 3 | 8 neurons, ReLU | Refines learned representations |
+| Output Layer | 1 neuron, Sigmoid | Produces a probability for Class 1 |
+
+### Activation Functions
+
+**ReLU (Rectified Linear Unit)**
+
+ReLU introduces non-linearity into the hidden layers, enabling the network to learn complex patterns.
+
+**Sigmoid**
+
+The sigmoid activation function produces an output between 0 and 1. This value is interpreted as the estimated probability of belonging to Class 1.
+
+A threshold of 0.5 is used to convert the output probability into a predicted class.
+
+### Training Configuration
+
+| Parameter | Value |
 |---|---|
-| Input layer | 2 features |
-| Hidden layer 1 | 16 neurons, ReLU |
-| Hidden layer 2 | 16 neurons, ReLU |
-| Hidden layer 3 | 8 neurons, ReLU |
-| Output layer | 1 neuron, Sigmoid |
+| Optimizer | Adam |
+| Loss Function | Binary Cross-Entropy |
+| Evaluation Metric | Accuracy |
+| Maximum Epochs | 150 |
+| Batch Size | 32 |
+| Validation Split | 20% of training data |
+| Early Stopping Monitor | `val_loss` |
+| Patience | 15 epochs |
+| Restore Best Weights | Enabled |
 
-### ⚙️ Training Configuration
+### Why Use Adam?
 
-- **Optimizer:** Adam
-- **Loss function:** Binary Cross-Entropy
-- **Evaluation metric:** Accuracy
-- **Maximum epochs:** 150
-- **Batch size:** 32
-- **Early stopping:** Monitors validation loss with a patience of 15 epochs
+Adam is an optimization algorithm that updates the network's weights during training. It adapts learning rates for individual parameters and is commonly used for neural-network training.
 
-### ✨ Key Features
+### Why Use Binary Cross-Entropy?
 
-- Synthetic dataset generation and visualization
-- Training and testing data splitting
-- Feature standardization using `StandardScaler`
-- ANN model creation and training
-- Training and validation accuracy graphs
-- Training and validation loss graphs
-- Classification report and confusion matrix
-- Decision-boundary visualization
-- Prediction for a new data sample
-- Saving the trained model
+Binary cross-entropy measures the difference between the predicted probabilities and the actual binary labels. It is suitable for binary classification models that use a sigmoid output.
 
-### 💾 Saved Model
+### Why Use Early Stopping?
 
-After successful execution, the trained model is saved as:
+Early stopping monitors validation loss and stops training when improvement does not occur for the specified number of epochs. Restoring the best weights helps retain the model state with the lowest monitored validation loss.
 
-```text
-ann_make_moons.keras
-```
+## ⚙️ Technology Stack
 
----
+The following technologies are used in this project:
 
-# 2. 🐱 CNN for Dogs vs Cats Classification
+- **Python:** Main programming language.
+- **NumPy:** Numerical operations and array manipulation.
+- **Matplotlib:** Data visualization and plotting.
+- **Scikit-learn:** Dataset generation, feature scaling, data splitting, and evaluation metrics.
+- **TensorFlow:** Deep-learning framework.
+- **Keras:** Neural-network construction, training, evaluation, and saving.
+- **Google Colab / Jupyter Notebook:** Interactive development environments.
 
-## 📖 Overview
+## 🚀 Installation and Setup
 
-The Convolutional Neural Network (CNN) project focuses on image classification by distinguishing between cats and dogs.
+### Option 1: Google Colab
 
-CNNs automatically learn visual features such as edges, textures, shapes, and patterns from images. These features help the model make predictions about the class of an input image.
+1. Open Google Colab.
+2. Upload `ANN_using_make_moons_dataset(1).ipynb`.
+3. Run the notebook cells sequentially or select **Runtime → Run all**.
+4. Review the output metrics and visualizations.
 
-### 🎯 Objectives
+Google Colab provides a convenient environment for running the notebook without setting up Python locally.
 
-- Understand the fundamentals of convolutional neural networks.
-- Load and preprocess images using TensorFlow/Keras.
-- Apply image normalization and data augmentation.
-- Train a CNN for binary image classification.
-- Evaluate model performance using validation data.
-- Visualize training metrics and classification results.
+### Option 2: Run Locally
 
-### 📂 Dataset Structure
-
-The notebook expects a cats-and-dogs dataset organized into training and validation directories.
-
-```text
-cats_and_dogs_filtered/
-├── train/
-│   ├── cats/
-│   └── dogs/
-└── validation/
-    ├── cats/
-    └── dogs/
-```
-
-**Important:** The notebook searches for these folders under `/content` and `~/.keras/datasets`. The image dataset must be downloaded and extracted beforehand if it is not already available. Update the notebook's search paths if you store the folders elsewhere.
-
-### 🖼️ Image Preprocessing
-
-| Property | Configuration |
-|---|---|
-| Image dimensions | 128 × 128 pixels |
-| Image channels | RGB |
-| Batch size | 32 |
-| Label mode | Binary |
-| Normalization | Pixel values scaled by 1/255 |
-| Data augmentation | Random horizontal flipping and rotation |
-| Dataset optimization | TensorFlow `AUTOTUNE` prefetching |
-
-### 🏗️ CNN Architecture
-
-| Layer | Configuration |
-|---|---|
-| Input layer | 128 × 128 × 3 |
-| Rescaling | 1/255 |
-| Data augmentation | Random flip and rotation |
-| Convolution block 1 | 32 filters with max pooling |
-| Convolution block 2 | 64 filters with max pooling |
-| Convolution block 3 | 128 filters with max pooling |
-| Flatten layer | Converts feature maps into a vector |
-| Dense layer | 128 neurons, ReLU |
-| Dropout layer | 0.5 |
-| Output layer | 1 neuron, Sigmoid |
-
-### ⚙️ Training Configuration
-
-- **Optimizer:** Adam
-- **Loss function:** Binary Cross-Entropy
-- **Evaluation metric:** Accuracy
-- **Maximum epochs:** 20
-- **Batch size:** 32
-- **Early stopping:** Monitors validation loss with a patience of 5 epochs
-
-### ✨ Key Features
-
-- Image loading from directory structures
-- Image resizing and normalization
-- Automatic binary label generation
-- CNN model development using TensorFlow/Keras
-- Data augmentation to improve generalization
-- Training and validation performance monitoring
-- Accuracy and loss visualization
-- Classification report and confusion matrix
-- Saving the trained CNN model
-
-### 💾 Saved Model
-
-In Google Colab, the trained model is saved at:
-
-```text
-/content/dog_cat_cnn.keras
-```
-
-You can download it using the Colab file browser after the notebook finishes running successfully.
-
----
-
-# 3. ⚙️ Installation and Setup
-
-## Step 1: Clone the Repository
-
-Open a terminal or command prompt and execute:
+Install Python and Jupyter Notebook, then install the required libraries.
 
 ```bash
-git clone <YOUR_GITHUB_REPOSITORY_URL>
-cd <YOUR_REPOSITORY_FOLDER>
+python -m pip install numpy matplotlib scikit-learn tensorflow jupyter
 ```
 
-Replace the placeholders with your actual GitHub repository URL and folder name.
-
-## Step 2: Create a Virtual Environment
-
-A virtual environment helps keep project dependencies separate from other Python projects.
-
-**Windows:**
-
-```bash
-python -m venv venv
-venv\Scripts\activate
-```
-
-**macOS/Linux:**
-
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
-
-## Step 3: Upgrade pip
-
-```bash
-python -m pip install --upgrade pip
-```
-
-## Step 4: Install Required Libraries
-
-Run the following command to install the main dependencies for both projects:
-
-```bash
-pip install numpy matplotlib scikit-learn tensorflow jupyter ipykernel
-```
-
-The CNN notebook also includes an installation cell for TensorFlow Datasets:
-
-```bash
-pip install tensorflow-datasets
-```
-
-Note that installing TensorFlow Datasets does not automatically download the image folders required by the current CNN notebook.
-
-## Step 5: Launch Jupyter Notebook
+Start Jupyter Notebook:
 
 ```bash
 jupyter notebook
 ```
 
-Open the required `.ipynb` file from the Jupyter interface.
+Open the notebook and execute the cells from beginning to end.
 
-### Alternative: Google Colab
+**Note:** If the notebook already contains a package-installation cell and the required libraries are installed, you can skip the installation step.
 
-You can also upload the notebooks to Google Colab and execute the cells without configuring a local Python environment.
+## 🔬 Project Workflow
 
----
+### Step 1: Generate the Dataset
 
-# 4. ▶️ How to Run the Projects
+Generate 1,000 samples with two features and two classes using `make_moons`.
 
-## Running the ANN Project
+### Step 2: Visualize the Data
 
-1. Open `ANN_using_make_moons_dataset.ipynb`.
-2. Install the required dependencies.
-3. Run the notebook cells sequentially.
-4. The synthetic dataset will be generated automatically.
-5. Observe the dataset visualization and training progress.
-6. Review the test metrics, classification report, confusion matrix, and decision boundary.
-7. Locate the saved model, `ann_make_moons.keras`, in the working directory.
+Plot the samples using Matplotlib. Different colors represent the two classes and help illustrate their non-linear structure.
 
-## Running the CNN Project
+### Step 3: Split the Dataset
 
-1. Open `CNN_Dogs_vs_Cats.ipynb`.
-2. Install the required dependencies.
-3. Download and extract a compatible cats-and-dogs image dataset.
-4. Organize the images into the required training and validation folders.
-5. Place the folders in a location searched by the notebook, or update its search paths.
-6. Run the notebook cells sequentially.
-7. Review the training and validation metrics and visualizations.
-8. Retrieve the saved model from `/content/dog_cat_cnn.keras` when running in Google Colab.
+Separate the dataset into training and testing portions.
 
----
+- Training portion: 80%
+- Testing portion: 20%
 
-# 5. 🛠️ Technologies Used
+The split uses a fixed random state and stratification to help preserve class proportions.
 
-| Technology | Purpose |
-|---|---|
-| Python | Core programming language |
-| NumPy | Numerical computations |
-| Matplotlib | Data visualization |
-| Scikit-learn | Dataset generation, preprocessing, and evaluation |
-| TensorFlow | Deep learning framework |
-| Keras | Neural network creation and training |
-| Jupyter Notebook | Interactive development environment |
-| Google Colab | Cloud-based notebook execution |
+### Step 4: Standardize Features
 
----
+Use `StandardScaler` to standardize the input features.
 
-# 6. 📈 Expected Outputs
+The scaler is fitted on the training data and then applied to the test data. This prevents the test set from influencing the fitted scaling parameters.
 
-| Project | Expected outputs |
-|---|---|
-| ANN | Dataset plot, test metrics, classification report, confusion matrix, accuracy/loss graphs, decision boundary, sample prediction |
-| CNN | Training history, validation metrics, classification report, confusion matrix, accuracy/loss graphs |
+### Step 5: Build the Neural Network
 
-Actual model performance depends on the training process and the dataset used. Execute the notebooks to obtain the actual results.
+Construct the ANN using Keras's Sequential API and dense layers with ReLU and sigmoid activation functions.
 
----
+### Step 6: Compile the Model
 
-# 7. 📁 Repository Structure
+Configure the model with:
 
-```text
-Deep-Learning-Projects/
-│
-├── README.md
-├── ANN_using_make_moons_dataset.ipynb
-└── CNN_Dogs_vs_Cats.ipynb
+- Adam optimizer
+- Binary cross-entropy loss
+- Accuracy metric
+
+### Step 7: Train the Model
+
+Train the neural network using mini-batches and monitor validation loss. Early stopping helps avoid continuing training when validation performance stops improving.
+
+### Step 8: Evaluate the Model
+
+Evaluate the trained model on the held-out test set and inspect its classification performance.
+
+### Step 9: Visualize the Results
+
+Generate plots to understand model learning, prediction errors, and the learned decision boundary.
+
+### Step 10: Save the Model
+
+Save the trained neural network in Keras format for future inference.
+
+## 📈 Model Evaluation
+
+Model evaluation is important for understanding how well the neural network classifies unseen data.
+
+### Metrics Used
+
+**1. Accuracy**
+
+Accuracy measures the proportion of correctly classified samples.
+
+Accuracy = Correct Predictions / Total Predictions
+
+**2. Loss**
+
+Binary cross-entropy loss measures the error between predicted probabilities and actual labels. Lower loss generally indicates better probabilistic predictions on the evaluated dataset.
+
+**3. Precision**
+
+Precision measures the proportion of positive predictions that are correct.
+
+**4. Recall**
+
+Recall measures the proportion of actual positive samples that the model correctly identifies.
+
+**5. F1-Score**
+
+The F1-score is the harmonic mean of precision and recall. It provides a combined measure of these two metrics.
+
+### Confusion Matrix
+
+The confusion matrix compares the actual labels with the predicted labels.
+
+- **True Negative (TN):** Class 0 correctly predicted as Class 0.
+- **False Positive (FP):** Class 0 incorrectly predicted as Class 1.
+- **False Negative (FN):** Class 1 incorrectly predicted as Class 0.
+- **True Positive (TP):** Class 1 correctly predicted as Class 1.
+
+The confusion matrix helps identify which class is being misclassified.
+
+### Learning Curves
+
+The notebook plots training and validation accuracy and loss.
+
+These plots help to:
+
+- Monitor model learning over epochs.
+- Compare training performance with validation performance.
+- Identify possible overfitting.
+- Understand whether additional training may be useful.
+
+### Decision Boundary
+
+The decision-boundary plot shows how the trained neural network separates the two classes across the two-dimensional feature space.
+
+It provides a visual explanation of how the network learns a non-linear classification boundary.
+
+**Performance note:** Actual test accuracy, loss, and classification metrics should be reported from the results produced when the notebook is executed. No specific score is claimed here because a verified execution result is not included in the notebook source.
+
+## 🧪 Making Predictions
+
+After training, the model can classify new samples.
+
+Example:
+
+```python
+import numpy as np
+
+new_sample = np.array([[0.5, 0.2]])
+
+new_sample_scaled = scaler.transform(new_sample)
+
+prediction = model.predict(
+    new_sample_scaled,
+    verbose=0
+)[0][0]
+
+predicted_class = int(prediction >= 0.5)
+
+print("Probability of Class 1:", float(prediction))
+print("Predicted Class:", predicted_class)
 ```
 
+The output probability indicates the model's estimated probability for Class 1.
+
+The predicted class is:
+
+- `1` when the probability is greater than or equal to 0.5.
+- `0` when the probability is below 0.5.
+
+**Important:** Every new sample must be transformed using the same fitted scaler used during training.
+
+## 💾 Saving the Model
+
+Save the trained model using:
+
+```python
+model.save("ann_make_moons.keras")
+```
+
+The model is saved in the current working directory as `ann_make_moons.keras`.
+
+### Saving the Scaler
+
+The fitted `StandardScaler` is a separate object and is not automatically included in the saved Keras model. Save it separately if you need consistent preprocessing for future predictions.
+
+```python
+import joblib
+
+joblib.dump(
+    scaler,
+    "make_moons_scaler.joblib"
+)
+```
+
+Install Joblib if necessary:
+
+```bash
+python -m pip install joblib
+```
+
+### Loading the Saved Model
+
+```python
+import joblib
+import numpy as np
+import tensorflow as tf
+
+model = tf.keras.models.load_model(
+    "ann_make_moons.keras"
+)
+
+scaler = joblib.load(
+    "make_moons_scaler.joblib"
+)
+
+sample = np.array([[0.5, 0.2]])
+sample_scaled = scaler.transform(sample)
+
+probability = float(
+    model.predict(sample_scaled, verbose=0)[0][0]
+)
+
+predicted_class = int(probability >= 0.5)
+
+print("Probability:", probability)
+print("Predicted Class:", predicted_class)
+```
+
+This allows the trained model to be reused without retraining it, provided that both the model and scaler files are available.
+
+## 📁 Project Structure
+
+```text
+ann-make-moons-classification/
+│
+├── ANN_using_make_moons_dataset(1).ipynb
+│
+├── README.md
+│
+├── ann_make_moons.keras
+│
+└── make_moons_scaler.joblib
+```
+
+### File Description
+
+- `ANN_using_make_moons_dataset(1).ipynb`: Contains the data-generation, preprocessing, model-training, evaluation, and visualization workflow.
+- `README.md`: Provides project documentation and setup instructions.
+- `ann_make_moons.keras`: Saved neural-network model, generated after running the relevant saving cell.
+- `make_moons_scaler.joblib`: Optional saved feature scaler for future predictions.
+
+The model and scaler files will not exist until they have been saved.
+
+## 🚀 Future Improvements
+
+The project can be extended in several ways:
+
+- Experiment with different numbers of hidden layers and neurons.
+- Compare ReLU with other activation functions.
+- Test different batch sizes and learning rates.
+- Investigate the effect of different noise levels.
+- Increase the dataset size and compare performance.
+- Compare ANN performance with logistic regression and support vector machines.
+- Evaluate multiple random seeds for more reliable comparisons.
+- Experiment with different classification thresholds.
+- Add model-performance comparison charts.
+- Create a simple web application for interactive predictions.
+
+For fair evaluation, keep the test set separate from model tuning and compare experiments using consistent data splits.
+
+## ⚠️ Limitations
+
+- The project uses synthetic data rather than a real-world dataset.
+- Results may vary with random seeds, library versions, and training behavior.
+- A good score on this dataset does not guarantee performance on other classification problems.
+- The test set should not be repeatedly used to tune the model.
+- The fitted scaler must be saved separately for consistent predictions.
+- The notebook source does not establish a fixed benchmark accuracy.
+
+## 🤝 Contributing
+
+Contributions and suggestions are welcome.
+
+To contribute:
+
+1. Fork the repository.
+2. Create a new branch.
+3. Make your changes.
+4. Test the updated notebook.
+5. Update the documentation if needed.
+6. Submit a pull request describing your improvements.
+
+## 📄 License
+
+No license is specified in the supplied notebook. If you publish this project publicly, add a license file that reflects how you want others to use, modify, and distribute your work.
+
 ---
 
-# 8. 🎓 Learning Outcomes
+<div align="center">
 
-By completing these projects, you will gain practical experience in:
+### 🌟 Learning Deep Learning, One Neuron at a Time
 
-- Artificial neural network fundamentals
-- Nonlinear binary classification
-- Data preprocessing and feature scaling
-- Convolutional neural network fundamentals
-- Image preprocessing and data augmentation
-- Model training and validation
-- Classification metrics and confusion matrices
-- Training-curve and decision-boundary visualization
-- Saving and reusing trained deep learning models
+**Exploring Artificial Neural Networks, non-linear classification, and model evaluation with Python.**
 
----
+If you find this project useful, consider giving the repository a ⭐ on GitHub.
 
-## 🌟 Conclusion
-
-These projects demonstrate two important applications of deep learning.
-
-The **ANN project** explores how neural networks learn nonlinear patterns in numerical data, while the **CNN project** demonstrates how convolutional networks learn visual features for image classification.
-
-Together, they provide practical experience in data preparation, model development, training, evaluation, and visualization using modern deep learning tools.
-
-**Built with Python, TensorFlow, and a passion for Deep Learning.**
+</div>
